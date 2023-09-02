@@ -1,36 +1,76 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect,  useState } from 'react';
 import loginImg from '../../assets/others/authentication1.png'
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import auth from '../../firebase.init';
+import Swal from 'sweetalert2'
+import { AuthContext } from '../Provider/AuthProvider';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const [disable,setDisable]=useState(true)
-    const [block,setBlock]=useState(true)
-    const captchaRef= useRef('')
+    const { signIn } = useContext(AuthContext)
+    const [disable, setDisable] = useState(true)
+    const [block, setBlock] = useState(true)
+    const navigate = useNavigate()
+    const location= useLocation()
+   
+    let from = location.state?.from?.pathname || "/";
     useEffect(() => {
         loadCaptchaEnginge(7)
     }, [])
- const handleCaptcha=()=>{
-    
-    const user_captcha_value= captchaRef.current.value 
+    const handleCaptcha = (e) => {
 
-    if (validateCaptcha(user_captcha_value)) {
-        setDisable(false)
-        setBlock(false)
+        const user_captcha_value = e.target.value
+
+        if (validateCaptcha(user_captcha_value)) {
+            setDisable(false)
+            setBlock(false)
+        }
+
+        else {
+            alert('Captcha Does Not Match');
+        }
+        //console.log(user_captcha_value)
     }
 
-    else {
-        alert('Captcha Does Not Match');
-    }
-    console.log(user_captcha_value)
- }
-    
     const handleSubmit = (event) => {
         event.preventDefault()
         const email = event.target.email.value
         const password = event.target.password.value
-        console.log(email, password)
+        //console.log(email, password)
+        signIn(email, password)
+            .then(result => {
+                const user = result.user
+                console.log('login', user)
+                Swal.fire({
+                    position: '',
+                    icon: 'success',
+                    title: 'login success ',
+                    showConfirmButton: false,
+                    timer: 15000
+                })
+                navigate(from,{replace:true})
+            })
 
     }
+
+    const googleProvider = new GoogleAuthProvider();
+    const handleGoogleLogin = () => {
+        signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                const user = result.user;
+                console.log(user)
+
+            }).catch((error) => {
+                // Handle Errors here.
+                const errorMessage = error.message;
+                console.log(errorMessage)
+
+            });
+    }
+
+
+
     return (
         <div className="card bg-base-300 shadow-xl  border-2 ">
             <div className="hero  bg-base-200 mt-5">
@@ -53,29 +93,32 @@ const Login = () => {
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input type="text" placeholder="password" className="input input-bordered" name='password' />
+                                <input type="password" placeholder="password" className="input input-bordered" name='password' />
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
                             </div>
 
                             {/* Captcha verify part */}
-                          <div style={{display:block ? 'block':'none'}} className=" form-control" >
+                            <div style={{ display: block ? 'block' : 'none' }} className=" form-control" >
                                 <label className=" label  p-2 rounded-lg my-2 border-2">
                                     <LoadCanvasTemplate />
                                 </label>
-                                <input type="text" placeholder="type above captcha" ref={captchaRef} className="input input-bordered"
+                                <input type="text" onBlur={handleCaptcha} placeholder="type above captcha" className="input input-bordered"
                                 />
-                                <button onClick={handleCaptcha} className="btn btn-outline btn-xs my-2"> Verify Captcha</button>
+                                {/* <button className="btn btn-outline btn-xs my-2"> Verify Captcha</button> */}
 
                             </div>
+                            <p>New here?<Link to='/SignUp'>Create New account</Link></p>
                             <div className="form-control mt-6">
                                 <input disabled={disable} className="btn btn-primary" type="submit" value="Login" />
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
+            <button onClick={handleGoogleLogin} className='btn btn-outline btn-sm w-1/2 text-center'>google</button>
 
         </div>
     );

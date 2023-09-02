@@ -31,7 +31,7 @@ const SwaiperSlider = () => {
             clickable: true,
           }}
           modules={[Pagination]}
-          className="mySwiper" my-4
+          className="mySwiper" 
         >
 
           <SwiperSlide>
