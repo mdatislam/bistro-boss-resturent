@@ -9,7 +9,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const { signIn } = useContext(AuthContext)
-    const [disable, setDisable] = useState(true)
+    //const [disable, setDisable] = useState(true)
     const [block, setBlock] = useState(true)
     const navigate = useNavigate()
     const location= useLocation()
@@ -23,7 +23,7 @@ const Login = () => {
         const user_captcha_value = e.target.value
 
         if (validateCaptcha(user_captcha_value)) {
-            setDisable(false)
+            //setDisable(false)
             setBlock(false)
         }
 
@@ -109,9 +109,11 @@ const Login = () => {
                                 {/* <button className="btn btn-outline btn-xs my-2"> Verify Captcha</button> */}
 
                             </div>
+
+                            {/* to do button disable write {disable} instead of {false} */}
                             <p>New here?<Link to='/SignUp'>Create New account</Link></p>
                             <div className="form-control mt-6">
-                                <input disabled={disable} className="btn btn-primary" type="submit" value="Login" />
+                                <input disabled={false} className="btn btn-primary" type="submit" value="Login" />
                             </div>
                         </div>
                     </form>

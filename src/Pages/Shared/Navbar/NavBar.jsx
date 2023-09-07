@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { FaCartArrowDown, } from 'react-icons/fa';
 
 
 
@@ -19,7 +20,7 @@ const NavBar = () => {
 
     return (
         <>
-            <div className="Footer-text navbar fixed z-10 max-w-screen-lg mx-auto bg-blue-200">
+            <div className="Footer-text navbar fixed z-10 max-w-screen-lg mx-auto bg-pink-500">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -32,13 +33,17 @@ const NavBar = () => {
                         </ul>
                     </div>
                     <a className="btn btn-ghost normal-case text-xl">Bistro-Boss</a>
+                    <div className="indicator">
+                        <span className="indicator-item badge badge-primary">99+</span>
+                        <a className="btn btn-ghost normal-case text-2xl"><FaCartArrowDown /></a>
+                    </div>
+                   
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
                         <li><Link to='/'>Home</Link></li>
                         <li><Link to='/Menu'>Our Menu</Link></li>
                         <li><Link to='/Order/Salad'>Order Food</Link></li>
-                      {/*   <li><Link to='/Contact'>Contact</Link></li> */}
                         <li><Link to='/Secret'>Secret</Link></li>
                         {user ?
 
