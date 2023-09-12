@@ -2,11 +2,13 @@ import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { FaCartArrowDown, } from 'react-icons/fa';
+import useCart from "../../../hooks/useCart";
 
 
 
 
 const NavBar = () => {
+
     const { user, logOut } = useContext(AuthContext)
     //console.log(user) 
     const navigate = useNavigate()
@@ -16,6 +18,9 @@ const NavBar = () => {
             .then(() => { })
         navigate('/Login')
     }
+
+    const [carts] = useCart()
+    //console.log(carts)
 
 
     return (
@@ -32,21 +37,18 @@ const NavBar = () => {
 
                         </ul>
                     </div>
-                    <a className="btn btn-ghost normal-case text-xl">Bistro-Boss</a>
-                    <div className="indicator">
-                        <span className="indicator-item badge badge-primary">99+</span>
-                        <a className="btn btn-ghost normal-case text-2xl"><FaCartArrowDown /></a>
-                    </div>
-                   
+                    <a className="btn btn-ghost normal-case text-xl">Bistro-Boss </a>
+
+
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
+
                         <li><Link to='/'>Home</Link></li>
                         <li><Link to='/Menu'>Our Menu</Link></li>
                         <li><Link to='/Order/Salad'>Order Food</Link></li>
                         <li><Link to='/Secret'>Secret</Link></li>
                         {user ?
-
                             <div className="flex ">
                                 <button className="btn btn-ghost " onClick={handleSignOut}>LogOut</button>
                                 <div className="avatar">
@@ -59,6 +61,14 @@ const NavBar = () => {
                             :
                             <li><Link to='/Login'>Login</Link></li>}
 
+                        <li>
+                            <Link to='/DashBoard/MyCart'>
+                                <div className="indicator">
+                                    <a className="btn btn-ghost normal-case text-2xl"><FaCartArrowDown /></a>
+                                    <span className="indicator-item badge badge-warning">+{carts?.data?.length}</span>
+                                </div>
+                            </Link>
+                        </li>
 
                     </ul>
                 </div>

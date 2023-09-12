@@ -9,6 +9,8 @@ import Login from "../Pages/AuthPage/Login";
 import SignUp from "../Pages/AuthPage/SignUp";
 import SecretPage from "../Pages/SecretPage/SecretPage";
 import ProtectedRoute from "../Pages/SecretPage/ProtectedRoute";
+import DashBoard from "../Layout/DashBoard";
+import MyCart from "../Pages/DashBoard/MyCart/MyCart";
 
  export const router = createBrowserRouter([
     {
@@ -43,4 +45,14 @@ import ProtectedRoute from "../Pages/SecretPage/ProtectedRoute";
       }
       ]
     },
+    {
+      path:'DashBoard',
+      element:<ProtectedRoute><DashBoard></DashBoard></ProtectedRoute>,
+      children:[
+        {
+          path:'MyCart',
+          element:<MyCart></MyCart>
+        }
+      ]
+    }
   ]);

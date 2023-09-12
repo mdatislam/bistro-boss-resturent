@@ -1,13 +1,16 @@
 import { useContext } from 'react';
 import loginImg from '../../assets/others/authentication1.png'
 import { AuthContext } from '../Provider/AuthProvider';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
+import SocialLogin from './SocialLogin';
 
 const SignUp = () => {
     const { createUser, updateUser } = useContext(AuthContext)
     const navigate = useNavigate()
+    const location = useLocation()
 
+    let from = location.state?.from?.pathname || "/";
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -22,14 +25,34 @@ const SignUp = () => {
                 updateUser(name, PhotoURL)
                     .then(() => {
                         console.log('User Name update')
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'User created successfully.',
-                            showConfirmButton: false,
-                            timer: 15000
-                        });
-                        navigate('/')
+                        // userInfo send to database
+
+                        const userInfo = { name, email }
+
+                        fetch('http://localhost:5000/users', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(userInfo)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.insertedId) {
+                                    // for success popup msg
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        title: 'User created successfully.',
+                                        showConfirmButton: false,
+                                        timer: 15000
+                                    });
+
+                                }
+                            })
+
+
+                        navigate(from, { replace: true })
                     })
             })
             .catch(error => console.log(error.message))
@@ -44,7 +67,7 @@ const SignUp = () => {
                         <img src={loginImg} alt="logimg" />
                     </div>
                     <form className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100 mt-5" onSubmit={handleSubmit}>
-                        <div className="card-body">
+                        <div className="card-body mt-3">
                             <div className="text-center">
                                 <h1 className="text-xl font-bold">Register now!</h1>
                             </div>
@@ -81,6 +104,7 @@ const SignUp = () => {
                                 <input className="btn btn-primary" type="submit" value="Register" />
                             </div>
                         </div>
+                        <SocialLogin/>
                     </form>
 
                 </div>

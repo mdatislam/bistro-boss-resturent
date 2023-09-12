@@ -1,11 +1,10 @@
 import { useContext, useEffect,  useState } from 'react';
 import loginImg from '../../assets/others/authentication1.png'
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import auth from '../../firebase.init';
 import Swal from 'sweetalert2'
 import { AuthContext } from '../Provider/AuthProvider';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import SocialLogin from './SocialLogin';
 
 const Login = () => {
     const { signIn } = useContext(AuthContext)
@@ -54,8 +53,8 @@ const Login = () => {
 
     }
 
-    const googleProvider = new GoogleAuthProvider();
-    const handleGoogleLogin = () => {
+    
+   /*  const handleGoogleLogin = () => {
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
@@ -67,7 +66,7 @@ const Login = () => {
                 console.log(errorMessage)
 
             });
-    }
+    } */
 
 
 
@@ -116,11 +115,12 @@ const Login = () => {
                                 <input disabled={false} className="btn btn-primary" type="submit" value="Login" />
                             </div>
                         </div>
+                        <SocialLogin/>
                     </form>
 
                 </div>
             </div>
-            <button onClick={handleGoogleLogin} className='btn btn-outline btn-sm w-1/2 text-center'>google</button>
+            
 
         </div>
     );
