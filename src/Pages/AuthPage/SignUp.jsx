@@ -27,7 +27,7 @@ const SignUp = () => {
                         console.log('User Name update')
                         // userInfo send to database
 
-                        const userInfo = { name, email }
+                        const userInfo = { name, email, role: 'general' }
 
                         fetch('http://localhost:5000/users', {
                             method: 'POST',
@@ -45,7 +45,7 @@ const SignUp = () => {
                                         icon: 'success',
                                         title: 'User created successfully.',
                                         showConfirmButton: false,
-                                        timer: 15000
+                                        timer: 2500
                                     });
 
                                 }
@@ -104,7 +104,7 @@ const SignUp = () => {
                                 <input className="btn btn-primary" type="submit" value="Register" />
                             </div>
                         </div>
-                        <SocialLogin/>
+                        <SocialLogin />
                     </form>
 
                 </div>

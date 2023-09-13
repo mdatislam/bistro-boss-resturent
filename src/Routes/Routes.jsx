@@ -11,6 +11,9 @@ import SecretPage from "../Pages/SecretPage/SecretPage";
 import ProtectedRoute from "../Pages/SecretPage/ProtectedRoute";
 import DashBoard from "../Layout/DashBoard";
 import MyCart from "../Pages/DashBoard/MyCart/MyCart";
+import AllUsers from "../Pages/DashBoard/AllUsers/AllUsers";
+import AdminHome from "../Pages/DashBoard/AdminHome/AdminHome";
+import UserHome from "../Pages/DashBoard/UserHome/UserHome";
 
  export const router = createBrowserRouter([
     {
@@ -52,7 +55,19 @@ import MyCart from "../Pages/DashBoard/MyCart/MyCart";
         {
           path:'MyCart',
           element:<MyCart></MyCart>
-        }
+        },
+        {
+          path:'AllUsers',
+          element:<AllUsers></AllUsers>
+        },
+        {
+          path:'AdminHome',
+          element:<AdminHome></AdminHome>
+        },
+        {
+          path:'UserHome',
+          element:<UserHome></UserHome>
+        },
       ]
     }
   ]);

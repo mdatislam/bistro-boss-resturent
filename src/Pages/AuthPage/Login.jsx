@@ -1,4 +1,4 @@
-import { useContext, useEffect,  useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import loginImg from '../../assets/others/authentication1.png'
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import Swal from 'sweetalert2'
@@ -11,8 +11,8 @@ const Login = () => {
     //const [disable, setDisable] = useState(true)
     const [block, setBlock] = useState(true)
     const navigate = useNavigate()
-    const location= useLocation()
-   
+    const location = useLocation()
+
     let from = location.state?.from?.pathname || "/";
     useEffect(() => {
         loadCaptchaEnginge(7)
@@ -40,35 +40,39 @@ const Login = () => {
         signIn(email, password)
             .then(result => {
                 const user = result.user
-                console.log('login', user)
-                Swal.fire({
-                    position: '',
-                    icon: 'success',
-                    title: 'login success ',
-                    showConfirmButton: false,
-                    timer: 15000
+                //console.log('login', user)
+
+                /* token collect from server */
+               /*  fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
                 })
-                navigate(from,{replace:true})
+                    .then(res => res.json())
+                    .then(data => {
+                       // console.log(data)
+                        const Token = data.token
+                        localStorage.setItem('token', Token)
+                         */
+
+                        if (user) {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'login success ',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
+                    
+
+
+                navigate(from, { replace: true })
             })
 
     }
-
-    
-   /*  const handleGoogleLogin = () => {
-        signInWithPopup(auth, googleProvider)
-            .then((result) => {
-                const user = result.user;
-                console.log(user)
-
-            }).catch((error) => {
-                // Handle Errors here.
-                const errorMessage = error.message;
-                console.log(errorMessage)
-
-            });
-    } */
-
-
 
     return (
         <div className="card bg-base-300 shadow-xl  border-2 ">
@@ -115,12 +119,12 @@ const Login = () => {
                                 <input disabled={false} className="btn btn-primary" type="submit" value="Login" />
                             </div>
                         </div>
-                        <SocialLogin/>
+                        <SocialLogin />
                     </form>
 
                 </div>
             </div>
-            
+
 
         </div>
     );

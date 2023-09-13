@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { FaCartArrowDown, } from 'react-icons/fa';
 import useCart from "../../../hooks/useCart";
+import useUser from "../../../hooks/useUser";
 
 
 
@@ -10,6 +11,7 @@ import useCart from "../../../hooks/useCart";
 const NavBar = () => {
 
     const { user, logOut } = useContext(AuthContext)
+    const [, users] = useUser()
     //console.log(user) 
     const navigate = useNavigate()
 
@@ -21,7 +23,7 @@ const NavBar = () => {
 
     const [carts] = useCart()
     //console.log(carts)
-
+    const logedUser = users?.users?.find(u => u.email === user?.email)
 
     return (
         <>
@@ -47,7 +49,7 @@ const NavBar = () => {
                         <li><Link to='/'>Home</Link></li>
                         <li><Link to='/Menu'>Our Menu</Link></li>
                         <li><Link to='/Order/Salad'>Order Food</Link></li>
-                        <li><Link to='/Secret'>Secret</Link></li>
+
                         {user ?
                             <div className="flex ">
                                 <button className="btn btn-ghost " onClick={handleSignOut}>LogOut</button>
@@ -62,7 +64,7 @@ const NavBar = () => {
                             <li><Link to='/Login'>Login</Link></li>}
 
                         <li>
-                            <Link to='/DashBoard/MyCart'>
+                            <Link to={logedUser?.role === 'admin' ? '/DashBoard/AdminHome' : '/DashBoard/UserHome'}>
                                 <div className="indicator">
                                     <a className="btn btn-ghost normal-case text-2xl"><FaCartArrowDown /></a>
                                     <span className="indicator-item badge badge-warning">+{carts?.data?.length}</span>

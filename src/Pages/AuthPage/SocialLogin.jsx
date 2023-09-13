@@ -15,40 +15,50 @@ const SocialLogin = () => {
 
     const handleGoogleSing = () => {
         googleLogIn()
-        .then(result=> {
-            const googlUser= result.user 
-            console.log(googlUser)
-            /*  */
-            const userInfo = { name:googlUser.displayName, email:googlUser.email }
+            .then(result => {
+                const googlUser = result.user
+                // console.log(googlUser)
+                /*  */
+                const userInfo = { name: googlUser.displayName, email: googlUser.email, role: 'general' }
 
-            fetch('http://localhost:5000/users', {
-                method: 'POST',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(userInfo)
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.insertedId) {
-                        // for success popup msg
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'User created successfully.',
-                            showConfirmButton: false,
-                            timer: 15000
-                        });
-
-                    }
+                fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(userInfo)
                 })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.insertedId) {
+                            // for success popup msg
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'User created successfully.',
+                                showConfirmButton: false,
+                                timer: 2500
+                            });
+
+                        }
+                        else {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'LogIn successfully.',
+                                showConfirmButton: false,
+                                timer: 2500
+                            });
+
+                        }
+                    })
 
 
-            navigate(from, { replace: true })
+                navigate(from, { replace: true })
 
 
-            /*  */
-        })
+                /*  */
+            })
     }
 
     return (
