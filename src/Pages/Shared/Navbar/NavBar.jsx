@@ -1,18 +1,16 @@
-import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../Provider/AuthProvider";
 import { FaCartArrowDown, } from 'react-icons/fa';
 import useCart from "../../../hooks/useCart";
-import useUser from "../../../hooks/useUser";
+import useAuth from "../../../hooks/useAuth";
+import useAdmin from "../../../hooks/useAdmin";
 
 
 
 
 const NavBar = () => {
 
-    const { user, logOut } = useContext(AuthContext)
-    const [, users] = useUser()
-    //console.log(user) 
+   const {user,logOut}=useAuth()
+   const [isAdmin]=useAdmin()
     const navigate = useNavigate()
 
     const handleSignOut = () => {
@@ -22,8 +20,8 @@ const NavBar = () => {
     }
 
     const [carts] = useCart()
-    //console.log(carts)
-    const logedUser = users?.users?.find(u => u.email === user?.email)
+    //const isAdmin=true
+   
 
     return (
         <>
@@ -64,7 +62,7 @@ const NavBar = () => {
                             <li><Link to='/Login'>Login</Link></li>}
 
                         <li>
-                            <Link to={logedUser?.role === 'admin' ? '/DashBoard/AdminHome' : '/DashBoard/UserHome'}>
+                            <Link to={isAdmin ? '/DashBoard/AdminHome' : '/DashBoard/UserHome'}>
                                 <div className="indicator">
                                     <a className="btn btn-ghost normal-case text-2xl"><FaCartArrowDown /></a>
                                     <span className="indicator-item badge badge-warning">+{carts?.data?.length}</span>

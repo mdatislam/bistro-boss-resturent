@@ -3,31 +3,26 @@ import { useLocation, useNavigate, } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import useCart from "../../../../hooks/useCart";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 
 
 const Order = ({ menuItems, }) => {
-    const { image, price, name, recipe,_id } = menuItems
+    const [axiosSecure] = useAxiosSecure()
+    const { image, price, name, recipe, _id } = menuItems
     const { user } = useContext(AuthContext)
-const [,refetch]=useCart()
-   const location=useLocation()
-   const navigate=useNavigate()
+    const [, refetch] = useCart()
+    const location = useLocation()
+    const navigate = useNavigate()
 
-    const handleCart = (item) => {
-     
+    const handleCart = () => {
+
         if (user && user.email) {
             //console.log(item)
-            const orderItem= {orderItemId:_id,price,name,image,email:user.email}
-            fetch('http://localhost:5000/cart', {
-                method: "POST",
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(orderItem)
-            })
-                .then(res => res.json())
+            const orderItem = { orderItemId: _id, price, name, image, email: user.email }
+            axiosSecure.post('/cart', orderItem)
                 .then(data => {
                     //console.log(data)
-                    if (data.insertedId) {
+                    if (data.data.insertedId) {
                         refetch()
                         Swal.fire({
                             position: 'top-end',
@@ -50,8 +45,8 @@ const [,refetch]=useCart()
                 confirmButtonText: 'Login!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    navigate('/Login', {state:{from:location}})
-                   
+                    navigate('/Login', { state: { from: location } })
+
                 }
             })
         }

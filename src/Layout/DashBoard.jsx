@@ -1,20 +1,27 @@
 import { FaBars, FaBook, FaCalendarAlt, FaCommentDots, FaHome, FaShoppingCart, FaUsers, FaUtensils, FaWallet } from "react-icons/fa";
 import { NavLink, Outlet } from "react-router-dom";
 import useCart from "../hooks/useCart";
-import useUser from "../hooks/useUser";
-import { useContext } from "react";
-import { AuthContext } from "../Pages/Provider/AuthProvider";
+//import useUser from "../hooks/useUser";
+//import { useContext } from "react";
+//import { AuthContext } from "../Pages/Provider/AuthProvider";
+import useAdmin from "../hooks/useAdmin";
 
 
 
 const DashBoard = () => {
     const [carts] = useCart()
-    const {user}=useContext(AuthContext)
+    // User ta admin ki na ta check korar self procedure
+   /*  const {user}=useContext(AuthContext)
     //console.log(user.email)
     const [,users]=useUser()
     //console.log(users.users)
    const logedUser= users?.users?.find(u=> u.email===user.email)
-   // console.log(logedUser)
+   // console.log(logedUser) */
+
+   // User ta admin ki na ta check korar Another procedure
+
+   const [isAdmin]=useAdmin()
+  // const isAdmin=true
  
     
     return (
@@ -33,7 +40,7 @@ const DashBoard = () => {
                     <ul className="menu p-4 w-80 min-h-full  bg-[#D1A054]">
                         {/* Sidebar content here */}
                         {
-                            logedUser.role==='admin' ? <>
+                            /* logedUser.role==='admin' */  isAdmin ? <>
                                 <li>
                                     <NavLink to='/DashBoard/AdminHome' >
                                         <FaHome /> ADMIN HOME
