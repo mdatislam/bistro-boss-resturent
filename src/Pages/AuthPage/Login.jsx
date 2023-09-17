@@ -43,7 +43,7 @@ const Login = () => {
                 //console.log('login', user)
 
                 /* token collect from server */
-               /*  fetch('http://localhost:5000/users', {
+               /*  fetch('https://bistro-boss-server-zeta-seven.vercel.app/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

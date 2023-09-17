@@ -10,8 +10,8 @@ const AllUsers = () => {
         const [refetch,users]=useUser()
     //console.log(users)
     const handleDelete = (id) => {
-        console.log(id)
-        const url = `http://localhost:5000/users/${id}`
+       // console.log(id)
+        const url = `https://bistro-boss-server-zeta-seven.vercel.app/users/${id}`
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -28,7 +28,7 @@ const AllUsers = () => {
                 })
                     .then(res => res.json())
                     .then(data => {
-                        console.log(data)
+                       // console.log(data)
                         if (data.deletedCount > 0) {
                             Swal.fire(
                                 'Deleted!',
@@ -47,7 +47,7 @@ const AllUsers = () => {
 
     const handleMakeAdmin = id => {
         console.log(id)
-        const url = `http://localhost:5000/users/admin/${id}`
+        const url = `https://bistro-boss-server-zeta-seven.vercel.app/users/admin/${id}`
         fetch(url, {
             method: 'PATCH'
         })

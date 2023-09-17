@@ -14,6 +14,8 @@ import MyCart from "../Pages/DashBoard/MyCart/MyCart";
 import AllUsers from "../Pages/DashBoard/AllUsers/AllUsers";
 import AdminHome from "../Pages/DashBoard/AdminHome/AdminHome";
 import UserHome from "../Pages/DashBoard/UserHome/UserHome";
+import AdminRoute from "../Pages/SecretPage/AdminRoute";
+import AddItem from "../Pages/DashBoard/AddItem/AddItem";
 
  export const router = createBrowserRouter([
     {
@@ -40,17 +42,12 @@ import UserHome from "../Pages/DashBoard/UserHome/UserHome";
         path:'SignUp',
         element:<SignUp></SignUp>
       },
-      {
-        path:'Secret',
-        element:<ProtectedRoute>
-          <SecretPage></SecretPage>
-        </ProtectedRoute>
-      }
+      
       ]
     },
     {
       path:'DashBoard',
-      element:<ProtectedRoute><DashBoard></DashBoard></ProtectedRoute>,
+      element:<DashBoard></DashBoard>,
       children:[
         {
           path:'MyCart',
@@ -58,7 +55,7 @@ import UserHome from "../Pages/DashBoard/UserHome/UserHome";
         },
         {
           path:'AllUsers',
-          element:<AllUsers></AllUsers>
+          element:<AdminRoute><AllUsers></AllUsers></AdminRoute>
         },
         {
           path:'AdminHome',
@@ -67,6 +64,10 @@ import UserHome from "../Pages/DashBoard/UserHome/UserHome";
         {
           path:'UserHome',
           element:<UserHome></UserHome>
+        },
+        {
+          path:'AddItem',
+          element:<AdminRoute><AddItem></AddItem></AdminRoute>
         },
       ]
     }

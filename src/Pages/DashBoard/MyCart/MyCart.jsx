@@ -22,7 +22,7 @@ const MyCart = () => {
 
     const handleDelete = (id) => {
         // console.log(id)
-        const url = `http://localhost:5000/cart/${id}`
+        const url = `https://bistro-boss-server-zeta-seven.vercel.app/cart/${id}`
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",

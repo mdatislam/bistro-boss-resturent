@@ -21,15 +21,15 @@ const SignUp = () => {
         createUser(email, password)
             .then(result => {
                 const user = result.user
-                console.log("From signUp", user)
+                //console.log("From signUp", user)
                 updateUser(name, PhotoURL)
                     .then(() => {
-                        console.log('User Name update')
+                       // console.log('User Name update')
                         // userInfo send to database
 
                         const userInfo = { name, email, role: 'general' }
 
-                        fetch('http://localhost:5000/users', {
+                        fetch('https://bistro-boss-server-zeta-seven.vercel.app/users', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'

@@ -21,7 +21,7 @@ const SocialLogin = () => {
                 /*  */
                 const userInfo = { name: googlUser.displayName, email: googlUser.email, role: 'general' }
 
-                fetch('http://localhost:5000/users', {
+                fetch('https://bistro-boss-server-zeta-seven.vercel.app/users', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
