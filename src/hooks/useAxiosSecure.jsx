@@ -9,7 +9,7 @@ const useAxiosSecure = () => {
     const navigate = useNavigate()
 
     const axiosSecure = axios.create({
-        baseURL: 'https://bistro-boss-server-zeta-seven.vercel.app/',
+        baseURL: 'https://bistro-boss-server-zeta-seven.vercel.app',
     });
 
     //http://localhost:5000
