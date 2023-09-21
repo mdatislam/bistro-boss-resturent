@@ -4,6 +4,8 @@ import useCart from "../../../hooks/useCart";
 import { FaTrashAlt } from "react-icons/fa";
 import './MyCart.css'
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+
 
 
 const MyCart = () => {
@@ -22,11 +24,11 @@ const MyCart = () => {
 
     const handleDelete = (id) => {
         // console.log(id)
-        const url = `https://bistro-boss-server-zeta-seven.vercel.app/cart/${id}`
+        const url = `http://localhost:5000/cart/${id}`
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
-            width:400,
+            width: 400,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -61,10 +63,19 @@ const MyCart = () => {
             <Helmet>
                 <title>Bistro Boss |My Cart</title>
             </Helmet>
-            <div className="flex justify-around">
-                <h2 className="uppercase"> Total Orders: {carts?.data?.length}</h2>
-                <h2 className="uppercase"> Total price:{totalPrice} </h2>
-                <button className=" btn btn-warning btn-sm">PAY</button>
+            <div className="flex justify-around bg-slate-200 mt-4 rounded-lg py-2 items-center">
+                <h2 className="uppercase text-bold"> Total Orders: {carts?.data?.length}</h2>
+                <div className="flex">
+                    <span> Total price:</span>
+                    <span className="flex"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 7.5l.415-.207a.75.75 0 011.085.67V10.5m0 0h6m-6 0h-1.5m1.5 0v5.438c0 .354.161.697.473.865a3.751 3.751 0 005.452-2.553c.083-.409-.263-.75-.68-.75h-.745M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>{totalPrice}</span>
+                    </span>
+                </div>
+                <Link to='/DashBoard/Payment'>
+                   {totalPrice>0 && <button className=" btn btn-warning btn-sm">PAY</button>}
+                </Link>
             </div>
             <div className="mt-5">
                 <div className="overflow-x-auto">

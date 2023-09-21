@@ -11,7 +11,7 @@ const AllUsers = () => {
     //console.log(users)
     const handleDelete = (id) => {
        // console.log(id)
-        const url = `https://bistro-boss-server-zeta-seven.vercel.app/users/${id}`
+        const url = `http://localhost:5000/users/${id}`
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -47,7 +47,7 @@ const AllUsers = () => {
 
     const handleMakeAdmin = id => {
         console.log(id)
-        const url = `https://bistro-boss-server-zeta-seven.vercel.app/users/admin/${id}`
+        const url = `http://localhost:5000/users/admin/${id}`
         fetch(url, {
             method: 'PATCH'
         })

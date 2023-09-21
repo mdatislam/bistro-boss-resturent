@@ -29,7 +29,7 @@ const SignUp = () => {
 
                         const userInfo = { name, email, role: 'general' }
 
-                        fetch('https://bistro-boss-server-zeta-seven.vercel.app/users', {
+                        fetch('http://localhost:5000/users', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'
