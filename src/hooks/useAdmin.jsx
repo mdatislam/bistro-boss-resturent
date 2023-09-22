@@ -6,7 +6,7 @@ const useAdmin = () => {
     const { user,loading } = useAuth()
     const [axiosSecure] = useAxiosSecure()
     const { isLoading: adminLoading ,data: isAdmin} = useQuery({
-        queryKey: ['isAdmin',],
+        queryKey: ['isAdmin'],
         enabled: !loading,
         queryFn: async () => {
 
